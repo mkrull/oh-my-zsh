@@ -32,6 +32,14 @@ ZSH_THEME="mugenken"
 plugins=(git ruby perl knife cpanm)
 
 source $ZSH/oh-my-zsh.sh
-unsetopt correct_all
 
 # Customize to your needs...
+# disable autocorrection
+unsetopt correct_all
+
+# support for Ruby::VersionManager
+if [ -f ~/.ruby_vmanager/var/ruby_vmanager.rc ]; then
+    unset RUBYOPT
+    source ~/.ruby_vmanager/var/ruby_vmanager.rc
+fi
+
