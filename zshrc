@@ -29,7 +29,7 @@ ZSH_THEME="mugenken"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git ruby perl knife cpanm)
+plugins=(git perl knife cpanm zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -42,4 +42,8 @@ if [ -f ~/.ruby_vmanager/var/ruby_vmanager.rc ]; then
     unset RUBYOPT
     source ~/.ruby_vmanager/var/ruby_vmanager.rc
 fi
+
+source "$HOME/perl5/perlbrew/etc/bashrc"
+export PERL_MM_USE_DEFAULT=1
+export TERM="xterm-256color"
 
