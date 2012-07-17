@@ -37,6 +37,9 @@ source $ZSH/oh-my-zsh.sh
 # disable autocorrection
 unsetopt correct_all
 
+# correctly complete ./ and ../
+zstyle -e ':completion:*' special-dirs '[[ $PREFIX = (../)#(|.|..) ]] && reply=(..)'
+
 # support for Ruby::VersionManager
 if [ -f ~/.ruby_vmanager/var/ruby_vmanager.rc ]; then
     unset RUBYOPT
