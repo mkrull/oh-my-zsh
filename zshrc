@@ -46,7 +46,11 @@ if [ -f ~/.ruby_vmanager/var/ruby_vmanager.rc ]; then
     source ~/.ruby_vmanager/var/ruby_vmanager.rc
 fi
 
-source "$HOME/perl5/perlbrew/etc/bashrc"
+# support perlbrew
+if [ -f "$HOME/perl5/perlbrew/etc/bashrc" ]; then
+    source "$HOME/perl5/perlbrew/etc/bashrc"
+fi
+
 export PERL_MM_USE_DEFAULT=1
 export TERM="xterm-256color"
 
