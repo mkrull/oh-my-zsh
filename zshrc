@@ -51,6 +51,11 @@ if [ -f "$HOME/perl5/perlbrew/etc/bashrc" ]; then
     source "$HOME/perl5/perlbrew/etc/bashrc"
 fi
 
+# support local cabal
+if [ -d "$HOME/.cabal" ]; then
+    export PATH=$PATH:$HOME/.cabal/bin
+fi
+
 export PERL_MM_USE_DEFAULT=1
 export TERM="xterm-256color"
 
