@@ -6,7 +6,7 @@ if [ "" != "$TO" ]; then
 fi
 
 PROMPT='%{$fg[blue]%}%D{%H:%M:%S} %{$reset_color%}'
-PROMPT=$'%B┌─[%b %{$fg_bold[green]%}%n@%m %{$fg[white]%}%~%{$reset_color%} $(git_prompt_info)$SSH_STRING%B]\
+PROMPT=$'%B┌─[%b %{$fg_bold[green]%}%n@%m %{$fg[white]%}%~%{$reset_color%} $(git_prompt_info) $SSH_STRING %{$fg_bold[green]%}$(perlbrew-prompt) $(rubyversion-prompt)%{$reset_color%} %B]\
 └─>%b '
 
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[green]%}"
