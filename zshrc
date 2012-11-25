@@ -40,10 +40,6 @@ unsetopt correct_all
 # correctly complete ./ and ../
 zstyle -e ':completion:*' special-dirs '[[ $PREFIX = (../)#(|.|..) ]] && reply=(..)'
 
-# disable screen blanking
-xset -dpms
-xset s off
-
 # support for Ruby::VersionManager
 if [ -f ~/.ruby_vmanager/var/ruby_vmanager.rc ]; then
     unset RUBYOPT
@@ -70,6 +66,17 @@ if [[ -d "$HOME/.node" ]]; then
     export PATH=$PATH:$HOME/.node/bin
 fi
 
+export PATH=/usr/local/bin:$PATH
+
 export PERL_MM_USE_DEFAULT=1
 export TERM="xterm-256color"
+
+# vim nerdtree root
+NERD_TREE_ROOT=programming
+
+# go support
+if [[ -d "$HOME/gopath" ]]; then
+    export GOPATH="$HOME/gopath"
+    export PATH=$PATH:$GOPATH/bin
+fi
 
