@@ -2,7 +2,7 @@
 ZSH=$HOME/.zsh
 
 # Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
+# Look in ~/oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 ZSH_THEME="mugenken"
@@ -12,7 +12,7 @@ ZSH_THEME="mugenken"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Set to this to use case-sensitive completion
-# CASE_SENSITIVE="true"
+CASE_SENSITIVE="true"
 
 # Comment this out to disable weekly auto-update checks
 # DISABLE_AUTO_UPDATE="true"
@@ -26,10 +26,10 @@ ZSH_THEME="mugenken"
 # Uncomment following line if you want red dots to be displayed while waiting for completion
 # COMPLETION_WAITING_DOTS="true"
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Which plugins would you like to load? (plugins can be found in ~/oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git perl knife cpanm cabal ghc zsh-syntax-highlighting ruby)
+plugins=(git perl knife cpanm cabal ghc zsh-syntax-highlighting history-substring-search ruby gem)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -51,6 +51,12 @@ if [ -f "$HOME/perl5/perlbrew/etc/bashrc" ]; then
     source "$HOME/perl5/perlbrew/etc/bashrc"
 fi
 
+# follow module maker suggestions
+export PERL_MM_USE_DEFAULT=1
+
+# 256 colour terminal
+export TERM="xterm-256color"
+
 # support local cabal
 if [ -d "$HOME/.cabal" ]; then
     export PATH=$PATH:$HOME/.cabal/bin
@@ -66,17 +72,11 @@ if [[ -d "$HOME/.node" ]]; then
     export PATH=$PATH:$HOME/.node/bin
 fi
 
-export PATH=/usr/local/bin:$PATH
-
-export PERL_MM_USE_DEFAULT=1
-export TERM="xterm-256color"
-
-# vim nerdtree root
-NERD_TREE_ROOT=programming
-
 # go support
 if [[ -d "$HOME/gopath" ]]; then
     export GOPATH="$HOME/gopath"
     export PATH=$PATH:$GOPATH/bin
 fi
+
+export PATH=/usr/local/bin:$PATH
 
