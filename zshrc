@@ -78,5 +78,10 @@ if [[ -d "$HOME/gopath" ]]; then
     export PATH=$PATH:$GOPATH/bin
 fi
 
+# use most if installed
+if [ -x /usr/bin/most ]; then
+    export PAGER=most
+fi
+
 export PATH=/usr/local/bin:$PATH
 
