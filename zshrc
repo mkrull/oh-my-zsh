@@ -59,7 +59,7 @@ export TERM="xterm-256color"
 
 # support local cabal
 if [ -d "$HOME/.cabal" ]; then
-    export PATH=$PATH:$HOME/.cabal/bin
+    export PATH=$HOME/.cabal/bin:$PATH
 fi
 
 # support pythonbrew
@@ -69,13 +69,13 @@ fi
 
 # support node
 if [[ -d "$HOME/.node" ]]; then
-    export PATH=$PATH:$HOME/.node/bin
+    export PATH=$HOME/.node/bin:$PATH
 fi
 
 # go support
 if [[ -d "$HOME/gopath" ]]; then
     export GOPATH="$HOME/gopath"
-    export PATH=$PATH:$GOPATH/bin
+    export PATH=$GOPATH/bin:$PATH
 fi
 
 # use most if installed
