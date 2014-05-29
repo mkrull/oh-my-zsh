@@ -29,13 +29,23 @@ CASE_SENSITIVE="true"
 # Which plugins would you like to load? (plugins can be found in ~/oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git perl knife cpanm cabal ghc zsh-syntax-highlighting history-substring-search ruby gem)
+plugins=(git perl knife cpanm cabal ghc zsh-syntax-highlighting history-substring-search rvm ruby gem)
 
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 # disable autocorrection
 unsetopt correct_all
+
+# add basics to path
+if [ -d /usr/local/bin ]; then
+    PATH=/usr/local/bin:$PATH
+fi
+if [ ! -d $HOME/bin ]; then
+    mkdir $HOME/bin
+fi
+# security considerations?
+PATH=$HOME/bin:$PATH
 
 # correctly complete ./ and ../
 zstyle -e ':completion:*' special-dirs '[[ $PREFIX = (../)#(|.|..) ]] && reply=(..)'
@@ -59,7 +69,7 @@ export TERM="xterm-256color"
 
 # support local cabal
 if [ -d "$HOME/.cabal" ]; then
-    export PATH=$PATH:$HOME/.cabal/bin
+    PATH=$HOME/.cabal/bin:$PATH
 fi
 
 # support pythonbrew
@@ -69,13 +79,13 @@ fi
 
 # support node
 if [[ -d "$HOME/.node" ]]; then
-    export PATH=$PATH:$HOME/.node/bin
+    PATH=$HOME/.node/bin:$PATH
 fi
 
 # go support
 if [[ -d "$HOME/gopath" ]]; then
     export GOPATH="$HOME/gopath"
-    export PATH=$PATH:$GOPATH/bin
+    PATH=$GOPATH/bin:$PATH
 fi
 
 # use most if installed
@@ -83,5 +93,24 @@ if [ -x /usr/bin/most ]; then
     export PAGER=most
 fi
 
-export PATH=/usr/local/bin:$PATH
+# rvm support
+if [ -d $HOME/.rvm/bin ]; then
+    PATH=:$HOME/.rvm/bin$PATH # Add RVM to PATH for scripting
+fi
 
+# check if privoxy is running and export proxy if so
+privoxy_port=8118
+privoxy_host=localhost
+if [ "$(which nc)" = "" ]; then
+    echo "Install nc (netcat) to enable port checks"
+else
+    resp=$(echo 'GET / HTTP/1.0\n\n' | nc -w3 $privoxy_host $privoxy_port)
+
+    case "$resp" in
+        *Privoxy*)
+            export http_proxy="http://$privoxy_host:$privoxy_port"
+            ;;
+    esac
+fi
+
+export PATH

@@ -6,7 +6,7 @@ alias sgem='sudo gem'
 alias rfind='find . -name "*.rb" | xargs grep -n'
 
 rubyversion-prompt () {
-  rubyversion=$RUBY_VERSION
+  local rubyversion=$RUBY_VERSION
   [[ -z $rubyversion ]] && rubyversion="system ruby"
   echo $rubyversion
 }
