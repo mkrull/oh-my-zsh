@@ -95,7 +95,7 @@ fi
 
 # rvm support
 if [ -d $HOME/.rvm/bin ]; then
-    PATH=:$HOME/.rvm/bin$PATH # Add RVM to PATH for scripting
+    PATH=$HOME/.rvm/bin:$PATH # Add RVM to PATH for scripting
 fi
 
 # check if privoxy is running and export proxy if so
