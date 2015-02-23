@@ -84,8 +84,9 @@ fi
 
 # go support
 if [[ -d "$HOME/gopath" ]]; then
+    export GOROOT="/usr/local/go"
     export GOPATH="$HOME/gopath"
-    PATH=$GOPATH/bin:$PATH
+    PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 fi
 
 # use most if installed
@@ -98,13 +99,18 @@ if [ -d $HOME/.rvm/bin ]; then
     PATH=$HOME/.rvm/bin:$PATH # Add RVM to PATH for scripting
 fi
 
+# rakudobrew
+if [ -d $HOME/.rakudobrew/bin ]; then
+    PATH=$HOME/.rakudobrew/bin:$PATH # Add RVM to PATH for scripting
+fi
+
 # check if privoxy is running and export proxy if so
 privoxy_port=8118
 privoxy_host=localhost
 if [ "$(which nc)" = "" ]; then
     echo "Install nc (netcat) to enable port checks"
 else
-    resp=$(echo 'GET / HTTP/1.0\n\n' | nc -w3 $privoxy_host $privoxy_port)
+    resp=$(echo 'GET / HTTP/1.0\n\n' | nc -w3 $privoxy_host $privoxy_port 2>&1)
 
     case "$resp" in
         *Privoxy*)
