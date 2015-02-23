@@ -44,8 +44,11 @@ fi
 if [ ! -d $HOME/bin ]; then
     mkdir $HOME/bin
 fi
+
 # security considerations?
 PATH=$HOME/bin:$PATH
+
+export EDITOR=vim
 
 # correctly complete ./ and ../
 zstyle -e ':completion:*' special-dirs '[[ $PREFIX = (../)#(|.|..) ]] && reply=(..)'
