@@ -44,8 +44,11 @@ fi
 if [ ! -d $HOME/bin ]; then
     mkdir $HOME/bin
 fi
+
 # security considerations?
 PATH=$HOME/bin:$PATH
+
+export EDITOR=vim
 
 # correctly complete ./ and ../
 zstyle -e ':completion:*' special-dirs '[[ $PREFIX = (../)#(|.|..) ]] && reply=(..)'
@@ -95,8 +98,9 @@ fi
 
 # go support
 if [[ -d "$HOME/gopath" ]]; then
+    export GOROOT="/usr/local/go"
     export GOPATH="$HOME/gopath"
-    PATH="$GOPATH/bin:$PATH"
+    PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 fi
 
 # use most if installed
@@ -106,7 +110,12 @@ fi
 
 # rvm support
 if [ -d $HOME/.rvm/bin ]; then
-    PATH=:$HOME/.rvm/bin$PATH # Add RVM to PATH for scripting
+    PATH=$HOME/.rvm/bin:$PATH # Add RVM to PATH for scripting
+fi
+
+# rakudobrew
+if [ -d $HOME/.rakudobrew/bin ]; then
+    PATH=$HOME/.rakudobrew/bin:$PATH # Add RVM to PATH for scripting
 fi
 
 # check if privoxy is running and export proxy if so
@@ -115,7 +124,7 @@ privoxy_host=localhost
 if [ "$(which nc)" = "" ]; then
     echo "Install nc (netcat) to enable port checks"
 else
-    resp=$(printf 'GET / HTTP/1.0\n\n' | nc -w3 "$privoxy_host" "$privoxy_port")
+    resp=$(echo 'GET / HTTP/1.0\n\n' | nc -w3 $privoxy_host $privoxy_port 2>&1)
 
     case "$resp" in
         *Privoxy*)
