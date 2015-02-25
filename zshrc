@@ -61,6 +61,12 @@ if [ -f "$HOME/perl5/perlbrew/etc/bashrc" ]; then
     source "$HOME/perl5/perlbrew/etc/bashrc"
 fi
 
+# support plenv
+if [ -d "$HOME/.plenv" ]; then
+    PATH="$HOME/.plenv/bin:$PATH"
+    eval "$(plenv init -)"
+fi
+
 # follow module maker suggestions
 export PERL_MM_USE_DEFAULT=1
 
@@ -69,7 +75,7 @@ export TERM="xterm-256color"
 
 # support local cabal
 if [ -d "$HOME/.cabal" ]; then
-    PATH=$HOME/.cabal/bin:$PATH
+    PATH="$HOME/.cabal/bin:$PATH"
 fi
 
 # support pythonbrew
@@ -79,13 +85,18 @@ fi
 
 # support node
 if [[ -d "$HOME/.node" ]]; then
-    PATH=$HOME/.node/bin:$PATH
+    PATH="$HOME/.node/bin:$PATH"
+fi
+
+# support iojs
+if [[ -d "$HOME/.io.js" ]]; then
+    PATH="$HOME/.io.js/bin:$PATH"
 fi
 
 # go support
 if [[ -d "$HOME/gopath" ]]; then
     export GOPATH="$HOME/gopath"
-    PATH=$GOPATH/bin:$PATH
+    PATH="$GOPATH/bin:$PATH"
 fi
 
 # use most if installed
@@ -104,11 +115,14 @@ privoxy_host=localhost
 if [ "$(which nc)" = "" ]; then
     echo "Install nc (netcat) to enable port checks"
 else
-    resp=$(echo 'GET / HTTP/1.0\n\n' | nc -w3 $privoxy_host $privoxy_port)
+    resp=$(printf 'GET / HTTP/1.0\n\n' | nc -w3 "$privoxy_host" "$privoxy_port")
 
     case "$resp" in
         *Privoxy*)
             export http_proxy="http://$privoxy_host:$privoxy_port"
+            export https_proxy=$http_proxy
+            export ftp_proxy=$http_proxy
+            export rsync_proxy=$http_proxy
             ;;
     esac
 fi
