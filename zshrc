@@ -64,6 +64,12 @@ if [ -f "$HOME/perl5/perlbrew/etc/bashrc" ]; then
     source "$HOME/perl5/perlbrew/etc/bashrc"
 fi
 
+# support plenv
+if [ -d "$HOME/.plenv" ]; then
+    PATH=$HOME/.plenv/bin:$PATH
+    eval "$(plenv init -)"
+fi
+
 # follow module maker suggestions
 export PERL_MM_USE_DEFAULT=1
 
